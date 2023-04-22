@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+
+import SplashScreen from "./src/screens/onboarding/SplashScreen";
+import OnboardingNavigator from "./src/navigation/OnboardingNavigator";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [isSplashScreenVisible, setIsSplashScreenVisible] = useState(true);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    setTimeout(() => {
+      setIsSplashScreenVisible(false);
+    }, 2000);
+  }, []);
+
+  if (isSplashScreenVisible) {
+    return <SplashScreen />;
+  } else {
+    return (
+      <NavigationContainer>
+        <OnboardingNavigator />
+      </NavigationContainer>
+    );
+  }
+}
