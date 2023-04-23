@@ -1,25 +1,34 @@
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import {
-  useFonts,
-  Urbanist_700Bold,
-  Urbanist_600SemiBold,
-  Urbanist_900Black,
-} from "@expo-google-fonts/urbanist";
+  Alert,
+  BackHandler,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import React, { useCallback, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
-const WelcomeSreen = () => {
-  const [fontsLoaded] = useFonts({
-    Urbanist_700Bold,
-    Urbanist_600SemiBold,
-    Urbanist_900Black,
-  });
+const WelcomeScreen = ({ navigation }) => {
+  const handleScreenTouch = () => {
+    navigation?.navigate("Onboarding", { screen: "Intro" });
+  };
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  useFocusEffect(
+    useCallback(() => {
+      const nextScreen = setTimeout(() => {
+        navigation?.navigate("Onboarding", { screen: "Intro" });
+      }, 4000);
+
+      return () => clearTimeout(nextScreen);
+    }, [])
+  );
+
   return (
-    <View style={styles.container}>
+    <TouchableHighlight style={styles.container} onPress={handleScreenTouch}>
       <ImageBackground
         style={styles.image}
         source={require("../../../assets/image/screens/welcome.png")}
@@ -38,16 +47,15 @@ const WelcomeSreen = () => {
           style={styles.mask}
         />
       </ImageBackground>
-    </View>
+    </TouchableHighlight>
   );
 };
 
-export default WelcomeSreen;
+export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -79,8 +87,6 @@ const styles = StyleSheet.create({
     fontSize: 48,
     lineHeight: 52.8,
     marginBottom: 12,
-    display: "flex",
-    alignItems: "center",
     fontFamily: "Urbanist_700Bold",
   },
   title: {
@@ -91,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: "Urbanist_900Black",
   },
   subtitle: {
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 18,
     lineHeight: 25.2,
     fontFamily: "Urbanist_600SemiBold",

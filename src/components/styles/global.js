@@ -9,8 +9,3 @@ export const bgColor = StyleSheet.create({
   primary: { backgroundColor: "#6842FF" },
   secondary: { backgroundColor: "#FFD300" },
 });
-
-export const fonts = StyleSheet.create({
-  primary: { backgroundColor: "#6842FF" },
-  secondary: { backgroundColor: "#FFD300" },
-});
